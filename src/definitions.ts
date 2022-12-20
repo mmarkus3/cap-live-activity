@@ -1,3 +1,3 @@
 export interface LiveActivityPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  start(options: { name: string; start: Date }): Promise<{ value: string }>;
 }

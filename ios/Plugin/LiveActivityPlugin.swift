@@ -9,10 +9,15 @@ import Capacitor
 public class LiveActivityPlugin: CAPPlugin {
     private let implementation = LiveActivity()
 
-    @objc func echo(_ call: CAPPluginCall) {
-        let value = call.getString("value") ?? ""
-        call.resolve([
-            "value": implementation.echo(value)
-        ])
+    @objc func start(_ call: CAPPluginCall) {
+        if #available(iOS 16.1, *) {
+            let name = call.getString("name") ?? ""
+            let start = call.getDate("start") ?? Date.now
+            call.resolve([
+                "value": implementation.start(name, start)
+            ])
+        } else {
+            call.unavailable("Not available in iOS 16 or earlier.")
+        }
     }
 }
